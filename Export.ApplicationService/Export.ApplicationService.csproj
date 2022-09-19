@@ -12,6 +12,7 @@
 		<PackageDescription>This package is for export objects to csv, xlsx and text file</PackageDescription>
 		<RepositoryUrl>https://github.com/aminmansouri2000/Export.git</RepositoryUrl>
 		<PackageProjectUrl>https://github.com/aminmansouri2000/Export.git</PackageProjectUrl>
+		<PackageId>Dotin.OnlineBranch.Export</PackageId>
 	</PropertyGroup>
 
 	<ItemGroup>
