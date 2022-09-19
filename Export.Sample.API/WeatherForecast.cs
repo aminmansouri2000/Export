@@ -24,7 +24,8 @@ public class WeatherForecast : IExportableResponse
            new ExportCellValueLong(TemperatureC),
            new ExportCellValueLong(TemperatureF),
            new ExportCellValueString(Summary),
-           new ExportCellValueNumberString(NumberStartZero)
+           new ExportCellValueNumberString(NumberStartZero),
+           new ExportCustomCellValue(Date)
        };
     }
 
@@ -38,6 +39,19 @@ public class WeatherForecast : IExportableResponse
             "TemperatureF",
             "Summary",
             "NumberStartZero",
+            "CustomCellValue"
         };
+    }
+}
+
+public class ExportCustomCellValue : ExportCellValue<DateTime>
+{
+    public ExportCustomCellValue(DateTime value) : base(value)
+    {
+    }
+
+    public override string GetValue()
+    {
+        return $"Day of year is {Value.DayOfYear}";  
     }
 }
