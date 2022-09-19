@@ -1,8 +1,4 @@
-﻿using DocumentFormat.OpenXml.Bibliography;
-using DocumentFormat.OpenXml.Wordprocessing;
-using Microsoft.Extensions.Logging;
-
-namespace Export.ApplicationService.Core;
+﻿namespace Export.ApplicationService.Core;
 
 public class ExportService : IExportService
 {
@@ -11,12 +7,11 @@ public class ExportService : IExportService
     private readonly IExportToFileServiceFactory _exportServiceFactory;
 
     public ExportService(ILogger<ExportService> logger,
-        IOptionsMonitor<ExportOption> options,
-        IExportToFileServiceFactory exportServiceFactory)
+        IOptionsMonitor<ExportOption> options)
     {
         _logger = logger;
         _options = options;
-        _exportServiceFactory = exportServiceFactory;
+        _exportServiceFactory = new ExportToFileServiceFactory();
     }
 
     public async Task<string> ExportAsync<TSearchResponse>(ExportType exportType,

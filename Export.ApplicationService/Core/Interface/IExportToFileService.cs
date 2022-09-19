@@ -1,6 +1,6 @@
 ﻿namespace Export.ApplicationService.Core.Interface;
 
-public interface IExportToFileService
+internal interface IExportToFileService
 {
     Task WriteCellValues<TSearchResponse>(int startRowIndex,
         List<TSearchResponse> results)

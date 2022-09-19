@@ -1,6 +1,6 @@
 ﻿namespace Export.ApplicationService.Infra;
 
-public class ExportToFileServiceFactory : IExportToFileServiceFactory
+internal class ExportToFileServiceFactory : IExportToFileServiceFactory
 {
     public IExportToFileService GetExportService(ExportType exportType)
     {

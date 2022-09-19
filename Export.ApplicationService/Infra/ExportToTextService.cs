@@ -1,6 +1,6 @@
 ﻿namespace Export.ApplicationService.Infra;
 
-public class ExportToTextService : IExportToFileService
+internal class ExportToTextService : IExportToFileService
 {
     private FileStream _fileStream;
     private ZipArchive _archive;

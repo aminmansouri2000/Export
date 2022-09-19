@@ -1,3 +1,4 @@
+using Export.ApplicationService;
 using Export.ApplicationService.Core.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,7 +39,7 @@ public class WeatherForecastController : ControllerBase
     {
         List<WeatherForecast> weatherForecasts = CreateWeatherForecast();
         var filePath = await _exportService.ExportAsync(ApplicationService.Core.ExportType.Csv, () => weatherForecasts.AsAsyncQueryable());
-        return GetFileStreamResult(filePath);
+        return ExportFileExtension.GetFileStreamResult(filePath);
     }
 
     [HttpPost("ef/xlsx")]
@@ -46,7 +47,7 @@ public class WeatherForecastController : ControllerBase
     {
         List<WeatherForecast> weatherForecasts = CreateWeatherForecast();
         var filePath = await _exportService.ExportAsync(ApplicationService.Core.ExportType.Xlsx, () => weatherForecasts.AsAsyncQueryable());
-        return GetFileStreamResult(filePath);
+        return ExportFileExtension.GetFileStreamResult(filePath);
     }
 
     [HttpPost("ef/text")]
@@ -54,7 +55,7 @@ public class WeatherForecastController : ControllerBase
     {
         List<WeatherForecast> weatherForecasts = CreateWeatherForecast();
         var filePath = await _exportService.ExportAsync(ApplicationService.Core.ExportType.Text, () => weatherForecasts.AsAsyncQueryable());
-        return GetFileStreamResult(filePath);
+        return ExportFileExtension.GetFileStreamResult(filePath);
     }
 
     [HttpPost("csv")]
@@ -62,7 +63,7 @@ public class WeatherForecastController : ControllerBase
     {
         List<WeatherForecast> weatherForecasts = CreateWeatherForecast();
         var filePath = await _exportService.ExportAsync(ApplicationService.Core.ExportType.Csv, weatherForecasts);
-        return GetFileStreamResult(filePath);
+        return ExportFileExtension.GetFileStreamResult(filePath);
     }
 
     [HttpPost("xlsx")]
@@ -70,7 +71,7 @@ public class WeatherForecastController : ControllerBase
     {
         List<WeatherForecast> weatherForecasts = CreateWeatherForecast();
         var filePath = await _exportService.ExportAsync(ApplicationService.Core.ExportType.Xlsx, weatherForecasts);
-        return GetFileStreamResult(filePath);
+        return ExportFileExtension.GetFileStreamResult(filePath);
     }
 
     [HttpPost("text")]
@@ -78,39 +79,10 @@ public class WeatherForecastController : ControllerBase
     {
         List<WeatherForecast> weatherForecasts = CreateWeatherForecast();
         var filePath = await _exportService.ExportAsync(ApplicationService.Core.ExportType.Text, weatherForecasts);
-        return GetFileStreamResult(filePath);
+        return ExportFileExtension.GetFileStreamResult(filePath);
     }
 
-    private FileStreamResult GetFileStreamResult(string filePath)
-    {
-        if (!Path.IsPathRooted(filePath))
-        {
-            throw new ArgumentException($"Invalid input parameter {filePath}");
-        }
-
-        string fileExtensions = Path.GetExtension(filePath).Replace(".", "");
-        FileStreamResult fileStreamResult =
-            new FileStreamResult(System.IO.File.OpenRead(filePath), GetFileContentType(fileExtensions))
-            {
-                FileDownloadName = Path.GetFileName(filePath),
-            };
-        return fileStreamResult;
-    }
-
-    private string GetFileContentType(string exportType)
-    {
-        switch (exportType.ToLower())
-        {
-            case "zip": return "application/zip";
-            case "xlsx":
-            case "excel":
-                return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-            case "pdf": return "application/pdf";
-            case "html": return "text/HTML";
-            case "csv": return "text/HTML";
-            default: return "text/plain";
-        }
-    }
+   
 
     private List<WeatherForecast> CreateWeatherForecast()
     {

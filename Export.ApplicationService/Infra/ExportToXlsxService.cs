@@ -4,7 +4,7 @@ using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace Export.ApplicationService.Infra;
 
-public class ExportToXlsxService : IExportToFileService
+internal class ExportToXlsxService : IExportToFileService
 {
     private SpreadsheetDocument _spreadsheetDocument;
     private SheetData _sheetData;
